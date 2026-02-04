@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>🏥 CarePlus Hospital</h1>
+    <p>Simple & Modern Hospital Management System</p>
+</header>
+
+<div class="container">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="flash {{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="card">
+        <h2>Add Patient</h2>
+        <form method="POST">
+            <input type="text" name="name" placeholder="Patient Name" required>
+            <input type="number" name="age" placeholder="Age" required>
+
+            <select name="gender">
+                <option>Male</option>
+                <option>Female</option>
+            </select>
+
+            <input type="text" name="problem" placeholder="Health Issue" required>
+
+            <button type="submit">➕ Add Patient</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Patient Records</h2>
+
+        {% for p in patients %}
+        <div class="patient-card">
+            <div class="patient-info">
+                <strong>{{ p.name }}</strong>
+                <p class="meta">{{ p.gender }}, {{ p.age }} yrs</p>
+                <p>{{ p.problem }}</p>
+            </div>
+            <form action="{{ url_for('delete_patient', patient_id=p.id) }}" method="POST" style="margin:0;">
+                <button type="submit" class="btn-delete">Remove</button>
+            </form>
+        </div>
+        {% else %}
+        <p class="empty">No patient records yet.</p>
+        {% endfor %}
+    </div>
+
+</div>
+
+</body>
+</html>
