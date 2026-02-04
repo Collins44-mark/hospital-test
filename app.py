@@ -40,7 +40,12 @@ class Patient(db.Model):
 
 
 with app.app_context():
-    db.create_all()
+    try:
+        db.create_all()
+    except Exception as e:
+        # Log but don't crash so Render shows a clear error in logs
+        import traceback
+        traceback.print_exc()
 
 
 @app.route("/", methods=["GET", "POST"])

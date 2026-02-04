@@ -1,0 +1,4 @@
+# Render: set Build Command and Start Command in Dashboard if not using Blueprint.
+# Build Command:  pip install -r requirements.txt
+# Start Command:  gunicorn app:app
+# Environment:    DATABASE_URL = (Internal Database URL from your Postgres service)
